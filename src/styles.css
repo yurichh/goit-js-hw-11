@@ -4,7 +4,9 @@
   --white: #fff;
   --gray: #9b9b9b;
 }
-
+body{
+  padding: 0 15px;
+}
 .search-form {
   border-radius: 10px;
   background-color: rgba(197, 195, 195, 0.326);
@@ -99,6 +101,8 @@ button:hover {
 }
 
 .gallery {
+  width: 100%;
+  margin: 0 auto;
   margin-top: 100px;
   display: flex;
   flex-wrap: wrap;
@@ -116,6 +120,7 @@ button:hover {
   width: 100%
   align-self: center;
 }
+
 .info {
   display: flex;
   gap: 20px;
@@ -127,4 +132,12 @@ button:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+@media screen and (max-width: 768px) {
+  .photo-card {
+  width: calc((100% - 34px) / 2);}
+}
+@media screen and (max-width: 375px) {
+  .photo-card {
+  width: calc(100% - 2px) ;}
 }

@@ -18,9 +18,19 @@ function handleSearch(event) {
   event.preventDefault();
   serviceImages(refs.input.value)
     .then(({ data }) => {
-      if (data.hits.length === 0) {
+      if (!refs.input.value) {
+        Notiflix.Notify.failure('Oooops... You need to add any tags in field', {
+          position: 'center-center',
+          width: '500px',
+        });
+        return;
+      } else if (data.hits.length === 0) {
         Notiflix.Notify.failure(
-          'Oooooooooooops.... There are no images matching your search query. Please try again.'
+          'Oooops.... There are no images matching your search query. Please try again.',
+          {
+            position: 'center-center',
+            width: '500px',
+          }
         );
         refs.loadMoreBtn.hidden = true;
       } else {
