@@ -1,1 +1,0 @@
-{"mappings":"AAGAA,QAAQC,IAAI","sources":["src/index.js"],"sourcesContent":["// import Notiflix from 'notiflix';\n// import SimpleLightbox from 'simplelightbox';\n// import axios from 'axios';\nconsole.log('Hello');\n"],"names":["console","log"],"version":3,"file":"index.5c9a4122.js.map"}
