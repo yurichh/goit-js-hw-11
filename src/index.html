@@ -7,6 +7,19 @@
     <title>HW-11</title>
   </head>
   <body>
-    <script src="./index.js" type="module"></script>
+    <form class="search-form" id="search-form">
+      <input
+        type="text"
+        name="searchQuery"
+        autocomplete="off"
+        placeholder="Search images..."
+        class="form__field"
+      />
+      <label for="searchQuery" class="form__label">Tag</label>
+      <button type="submit">Search</button>
+    </form>
+    <div class="gallery"></div>
+    <button type="button" class="load-more">Load more</button>
+    <script type="module" src="./index.js"></script>
   </body>
 </html>
