@@ -53,7 +53,6 @@ function showTotalResults(value) {
     width: '700px',
     fontSize: '30px',
     borderRadius: '10px',
-    distance: '220px',
     clickToClose: true,
   });
 }

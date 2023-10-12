@@ -32,10 +32,11 @@ function handleSearch(event) {
         Notiflix.Notify.failure(
           'Oooops.... There are no images matching your search query. Please try again.',
           {
-            position: 'center-center',
+            position: 'center-top',
             width: '700px',
             fontSize: '30px',
             borderRadius: '10px',
+            clickToClose: true,
           }
         );
 
@@ -44,10 +45,11 @@ function handleSearch(event) {
         Notiflix.Notify.failure(
           'Ooops... You must enter any tag in the field',
           {
-            position: 'center-center',
+            position: 'center-top',
             width: '700px',
             fontSize: '30px',
             borderRadius: '10px',
+            clickToClose: true,
           }
         );
       } else if (data.totalHits <= 40) {
@@ -75,7 +77,6 @@ refs.loadMoreBtn.addEventListener('click', () => {
   hideButton();
   serviceImages(inputValue, currentPage)
     .then(({ data }) => {
-      console.log(currentPage);
       if (pageLimit === currentPage) {
         hideButton();
         refs.wrapper.insertAdjacentHTML('beforeend', createMarkup(data.hits));

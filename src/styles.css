@@ -9,7 +9,7 @@ h1 {
 .search-form {
   border-radius: 10px;
   background-color: rgba(197, 195, 195, 0.326);
-  width: 400px;
+  max-width: 400px;
   padding: 30px;
   margin: 0 auto;
   margin-top: 30px;
@@ -63,7 +63,7 @@ input {
 .inputbox label {
   position: absolute;
   top: 19%;
-  left: 217px;
+  left: 47%;
   color: #43b247;
   font-size: 1em;
   pointer-events: none;
@@ -120,12 +120,12 @@ input:valid ~ label {
   align-items: center;
 }
 @media screen and (max-width: 768px) {
-  .photo-card {
-    width: calc((100% - 34px) / 2);
+  body {
+    max-width: 768px;
   }
-}
-@media screen and (max-width: 375px) {
   .photo-card {
     width: calc(100% - 2px);
+  }
+  .inputbox {
   }
 }
