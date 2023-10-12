@@ -26,9 +26,8 @@ let inputValue = '';
 
 function handleSearch(event) {
   event.preventDefault();
-  serviceImages(refs.input.value, (page = 1))
+  serviceImages(refs.input.value, (currentPage = 1))
     .then(({ data }) => {
-      console.log(data);
       if (data.hits.length === 0) {
         Notiflix.Notify.failure(
           'Oooops.... There are no images matching your search query. Please try again.',
