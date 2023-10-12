@@ -1,6 +1,12 @@
 import Notiflix from 'notiflix';
-import SimpleLightbox from 'simplelightbox';
-import axios from 'axios';
+import {
+  serviceImages,
+  createMarkup,
+  hideButton,
+  showButton,
+  showTotalResults,
+  scrollToSection,
+} from './functions.js';
 
 const refs = {
   form: document.querySelector('#search-form'),
@@ -11,78 +17,74 @@ const refs = {
 };
 
 refs.form.addEventListener('submit', handleSearch);
-refs.loadMoreBtn.hidden = true;
-let page = 2;
+
+hideButton();
+
+let currentPage = 0;
+let pageLimit = 0;
+let inputValue = '';
 
 function handleSearch(event) {
   event.preventDefault();
-  serviceImages(refs.input.value)
+  serviceImages(refs.input.value, (page = 1))
     .then(({ data }) => {
-      if (!refs.input.value) {
-        Notiflix.Notify.failure('Oooops... You need to add any tags in field', {
-          position: 'center-center',
-          width: '500px',
-        });
-        return;
-      } else if (data.hits.length === 0) {
+      console.log(data);
+      if (data.hits.length === 0) {
         Notiflix.Notify.failure(
           'Oooops.... There are no images matching your search query. Please try again.',
           {
             position: 'center-center',
-            width: '500px',
+            width: '700px',
+            fontSize: '30px',
+            borderRadius: '10px',
           }
         );
-        refs.loadMoreBtn.hidden = true;
-      } else {
+
+        hideButton();
+      } else if (!refs.input.value.trim()) {
+        Notiflix.Notify.failure(
+          'Ooops... You must enter any tag in the field',
+          {
+            position: 'center-center',
+            width: '700px',
+            fontSize: '30px',
+            borderRadius: '10px',
+          }
+        );
+      } else if (data.totalHits <= 40) {
         refs.wrapper.innerHTML = createMarkup(data.hits);
-        refs.loadMoreBtn.hidden = false;
+        showTotalResults(data.totalHits);
+        hideButton();
+        return;
+      } else {
+        pageLimit = Math.ceil(data.totalHits / 40);
+        refs.wrapper.innerHTML = createMarkup(data.hits);
+        showButton();
+        currentPage = 2;
+        showTotalResults(data.totalHits);
+        inputValue = refs.input.value;
+        scrollToSection(refs.wrapper);
       }
     })
-    .catch(console.log);
-  // .finally(() => {
-  //   refs.form.reset();
-  // });
+    .catch(console.log)
+    .finally(() => {
+      refs.form.reset();
+    });
 }
+
 refs.loadMoreBtn.addEventListener('click', () => {
-  serviceImages(refs.input.value, page++).then(({ data }) => {
-    if (data.hits.length === 0) {
-      Notiflix.Notify.failure(
-        'Oooooooooooops.... There are no images more'
-      ).catch(console.log);
-    }
-    refs.wrapper.insertAdjacentHTML('beforeend', createMarkup(data.hits));
-  });
+  hideButton();
+  serviceImages(inputValue, currentPage)
+    .then(({ data }) => {
+      console.log(currentPage);
+      if (pageLimit === currentPage) {
+        hideButton();
+        refs.wrapper.insertAdjacentHTML('beforeend', createMarkup(data.hits));
+        return;
+      }
+      showButton();
+      refs.wrapper.insertAdjacentHTML('beforeend', createMarkup(data.hits));
+      currentPage++;
+    })
+    .catch(console.log);
 });
-
-function serviceImages(value, page = 1) {
-  const BASE_URL = 'https://pixabay.com/api/';
-  const KEY = '39910711-abcee3e7f1b375d2c0a92cc23';
-  return axios.get(
-    `${BASE_URL}?key=${KEY}&q=${value}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`
-  );
-}
-
-function createMarkup(arr) {
-  return arr
-    .map(
-      ({ webformatURL, tags, likes, views, comments, downloads }) =>
-        `<div class="photo-card">
-  <img src="${webformatURL}" alt="${tags}" loading="lazy" class="photo-card-image"/>
-  <div class="info">
-    <p class="info-item">
-      <b>Likes</b>${likes}
-    </p>
-    <p class="info-item">
-      <b>Views</b>${views}
-    </p>
-    <p class="info-item">
-      <b>Comments</b>${comments}
-    </p>
-    <p class="info-item">
-      <b>Downloads</b>${downloads}
-    </p>
-  </div>
-</div>`
-    )
-    .join('');
-}

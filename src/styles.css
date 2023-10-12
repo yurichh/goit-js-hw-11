@@ -1,11 +1,10 @@
-:root {
-  --primary: #11998e;
-  --secondary: #38ef7d;
-  --white: #fff;
-  --gray: #9b9b9b;
-}
-body{
+body {
   padding: 0 15px;
+  font-family: 'Tilt Neon', sans-serif;
+}
+h1 {
+  margin-top: 140px;
+  margin-left: 40px;
 }
 .search-form {
   border-radius: 10px;
@@ -30,6 +29,7 @@ button {
   color: aliceblue;
   font-size: 16px;
   font-weight: 400;
+  font-family: 'Tilt Neon', sans-serif;
 }
 
 button:hover {
@@ -37,13 +37,14 @@ button:hover {
   background-color: #43b247;
   box-shadow: 0 20px 40px 0 rgba(11, 99, 246, 0.3);
 }
-/* input {
+input {
   padding: 10px;
   width: 200px;
   text-align: center;
   border: none;
   border-radius: 3px;
-} */
+  font-family: 'Tilt Neon', sans-serif;
+}
 .load-more {
   margin-top: 30px;
   position: absolute;
@@ -55,51 +56,36 @@ button:hover {
   transform: translate(-51%, -5%);
 }
 
-.form__field {
-  font-family: inherit;
-  width: 100%;
-  border: 0;
-  border-bottom: 2px solid var(--gray);
-  outline: 0;
-  font-size: 1.3rem;
-  color: black;
-  padding: 7px 0;
-  background: transparent;
-  transition: border-color 0.2s;
-  text-align: center;
+.inputbox {
+  position: relative;
+  border-bottom: 2px solid #fff;
 }
-.form__field::placeholder {
-  color: transparent;
-}
-/* 
-.form__field::placeholder-shown + .form__label {
-  font-size: 1.3rem;
-  cursor: text;
-  top: 20px;
-} */
-
-.form__label {
+.inputbox label {
   position: absolute;
-  top: 0;
-  display: block;
-  transition: 0.2s;
-  font-size: 1rem;
-  color: var(--gray);
+  top: 19%;
+  left: 217px;
+  color: #43b247;
+  font-size: 1em;
+  pointer-events: none;
+  transition: 0.5s;
 }
-
-.form__field:focus {
-  padding-bottom: 6px;
-  font-weight: 700;
-  border-width: 3px;
-  border-image: linear-gradient(to right, var(--primary), var(--secondary));
-  border-image-slice: 1;
+input:focus ~ label,
+input:valid ~ label {
+  top: 19%;
+  font-size: 15px;
+  left: 8%;
+  color: #43b24754;
 }
-
-.form__field:focus + .form__label {
-  color: var(--primary);
-  font-weight: 700;
+.inputbox input {
+  width: 100%;
+  background: transparent;
+  border-image: linear-gradient(to right, #43b247, #359038) 1 0%;
+  border-bottom: solid;
+  outline: none;
+  font-size: 1em;
+  padding: 0 0 5px 0;
+  color: #43b247;
 }
-
 .gallery {
   width: 100%;
   margin: 0 auto;
@@ -117,15 +103,15 @@ button:hover {
 }
 .photo-card-image {
   margin-top: auto;
-  width: 100%
   align-self: center;
+  width: 100%;
 }
 
 .info {
   display: flex;
   gap: 20px;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: space-evenly;
   margin-top: auto;
 }
 .info-item {
@@ -135,9 +121,11 @@ button:hover {
 }
 @media screen and (max-width: 768px) {
   .photo-card {
-  width: calc((100% - 34px) / 2);}
+    width: calc((100% - 34px) / 2);
+  }
 }
 @media screen and (max-width: 375px) {
   .photo-card {
-  width: calc(100% - 2px) ;}
+    width: calc(100% - 2px);
+  }
 }
